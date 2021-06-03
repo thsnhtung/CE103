@@ -1,0 +1,517 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND CODE TABS(2)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          //Khai bao ket noi IC 74595
+   3          
+   4          sbit IDX0_IC595_SHCP = P0^0;    //xung clock
+   5          sbit IDX0_IC595_DS = P0^1;    // chan data
+   6          sbit IDX0_IC595_STCP = P0^2;  // chan chot du lieu 
+   7          
+   8          sbit IDX1_IC595_SHCP = P0^3;    //xung clock
+   9          sbit IDX1_IC595_DS = P0^4;    // chan data
+  10          sbit IDX1_IC595_STCP = P0^5;  // chan chot du lieu 
+  11          
+  12          sbit IDX2_IC595_SHCP = P1^0;    //xung clock
+  13          sbit IDX2_IC595_DS = P1^1;    // chan data
+  14          sbit IDX2_IC595_STCP = P1^2;  // chan chot du lieu 
+  15          
+  16          sbit IDX3_IC595_SHCP = P1^3;    //xung clock
+  17          sbit IDX3_IC595_DS = P1^4;    // chan data
+  18          sbit IDX3_IC595_STCP = P1^5;  // chan chot du lieu 
+  19          
+  20          sbit button = P3^0;
+  21          sbit led1 = P3^1;
+  22          unsigned char STATE_595_0 = 0x00;
+  23          unsigned char STATE_595_1 = 0x00;
+  24          unsigned char STATE_595_2 = 0x00;
+  25          unsigned char STATE_595_3 = 0x00;
+  26          
+  27          void OUT_BYTE_LED(unsigned char value, unsigned char idx)
+  28          {
+  29   1        if (idx == 0)
+  30   1        {
+  31   2          unsigned char i;
+  32   2          STATE_595_0 = value;
+  33   2          for (i = 0 ; i < 8 ; i++)
+  34   2          {
+  35   3            IDX0_IC595_DS = !(value & (0x80 >>i));
+  36   3            IDX0_IC595_SHCP = 1;
+  37   3            IDX0_IC595_SHCP = 0 ;
+  38   3          }
+  39   2          IDX0_IC595_STCP = 1 ;
+  40   2          IDX0_IC595_STCP = 0 ; 
+  41   2        }
+  42   1        else if (idx == 1)
+  43   1        {
+  44   2          unsigned char i;
+  45   2          STATE_595_1 = value;
+  46   2          for (i = 0 ; i < 8 ; i++)
+  47   2          {
+  48   3            IDX1_IC595_DS = !(value & (0x80 >>i));
+  49   3            IDX1_IC595_SHCP = 1;
+  50   3            IDX1_IC595_SHCP = 0 ;
+  51   3          }
+  52   2          IDX1_IC595_STCP = 1 ;
+  53   2          IDX1_IC595_STCP = 0 ; 
+  54   2        }
+  55   1        else if (idx == 2)
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 2   
+
+  56   1        {
+  57   2          unsigned char i;
+  58   2          STATE_595_2 = value;
+  59   2          for (i = 0 ; i < 8 ; i++)
+  60   2          {
+  61   3            IDX2_IC595_DS = !(value & (0x80 >>i));
+  62   3            IDX2_IC595_SHCP = 1;
+  63   3            IDX2_IC595_SHCP = 0 ;
+  64   3          }
+  65   2          IDX2_IC595_STCP = 1 ;
+  66   2          IDX2_IC595_STCP = 0 ; 
+  67   2        }
+  68   1        
+  69   1        else 
+  70   1        {
+  71   2          unsigned char i;
+  72   2          STATE_595_3 = value;
+  73   2          for (i = 0 ; i < 8 ; i++)
+  74   2          {
+  75   3            IDX3_IC595_DS = !(value & (0x80 >>i));
+  76   3            IDX3_IC595_SHCP = 1;
+  77   3            IDX3_IC595_SHCP = 0 ;
+  78   3          }
+  79   2          IDX3_IC595_STCP = 1 ;
+  80   2          IDX3_IC595_STCP = 0 ; 
+  81   2        }
+  82   1        
+  83   1        
+  84   1      }
+  85          
+  86          
+  87          
+  88          void OUT_BIT_LED(unsigned char idx, unsigned char idx_595)
+  89          {
+  90   1        if (idx_595 == 0)
+  91   1        {
+  92   2          STATE_595_0 |= (0x01 << idx) ; 
+  93   2          OUT_BYTE_LED(STATE_595_0, idx_595);
+  94   2        }
+  95   1        else if (idx_595 == 1)
+  96   1        {
+  97   2          STATE_595_1 |= (0x01 << idx) ; 
+  98   2          OUT_BYTE_LED(STATE_595_1, idx_595);
+  99   2        }
+ 100   1        else if (idx_595 == 2)
+ 101   1        {
+ 102   2          STATE_595_2 |= (0x01 << idx) ; 
+ 103   2          OUT_BYTE_LED(STATE_595_2, idx_595);
+ 104   2        }
+ 105   1        else 
+ 106   1        {
+ 107   2          STATE_595_3 |= (0x01 << idx) ; 
+ 108   2          OUT_BYTE_LED(STATE_595_3, idx_595);
+ 109   2        }
+ 110   1      }
+ 111          
+ 112          
+ 113          unsigned char n;
+ 114          
+ 115          void main()
+ 116          {
+ 117   1        
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 3   
+
+ 118   1        // INIT 32 LED
+ 119   1        OUT_BYTE_LED(0x00,0);
+ 120   1        OUT_BYTE_LED(0x00,1);
+ 121   1        OUT_BYTE_LED(0x00,2);
+ 122   1        OUT_BYTE_LED(0x00,3);
+ 123   1        // CLEAR 32 LED
+ 124   1        
+ 125   1        OUT_BYTE_LED(0xff,0);
+ 126   1        OUT_BYTE_LED(0xff,1);
+ 127   1        OUT_BYTE_LED(0xff,2);
+ 128   1        OUT_BYTE_LED(0xff,3);
+ 129   1        
+ 130   1        button = 1 ;
+ 131   1        n = 0;
+ 132   1        while(1)
+ 133   1        {
+ 134   2        }
+ 135   1      }
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 4   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION _OUT_BYTE_LED (BEGIN)
+                                           ; SOURCE LINE # 27
+;---- Variable 'value' assigned to Register 'R3' ----
+0000 AB07              MOV     R3,AR7
+;---- Variable 'idx' assigned to Register 'R5' ----
+                                           ; SOURCE LINE # 28
+                                           ; SOURCE LINE # 29
+0002 ED                MOV     A,R5
+0003 7031              JNZ     ?C0001
+                                           ; SOURCE LINE # 30
+                                           ; SOURCE LINE # 32
+0005 8B00        R     MOV     STATE_595_0,R3
+                                           ; SOURCE LINE # 33
+0007 F500        R     MOV     i,A
+0009         ?C0002:
+                                           ; SOURCE LINE # 34
+                                           ; SOURCE LINE # 35
+0009 7480              MOV     A,#080H
+000B 7E00              MOV     R6,#00H
+000D A800        R     MOV     R0,i
+000F 08                INC     R0
+0010 8006              SJMP    ?C0031
+0012         ?C0030:
+0012 CE                XCH     A,R6
+0013 A2E7              MOV     C,ACC.7
+0015 13                RRC     A
+0016 CE                XCH     A,R6
+0017 13                RRC     A
+0018         ?C0031:
+0018 D8F8              DJNZ    R0,?C0030
+001A FF                MOV     R7,A
+001B EB                MOV     A,R3
+001C F582              MOV     DPL,A
+001E EF                MOV     A,R7
+001F 5582              ANL     A,DPL
+0021 24FF              ADD     A,#0FFH
+0023 B3                CPL     C
+0024 9281              MOV     IDX0_IC595_DS,C
+                                           ; SOURCE LINE # 36
+0026 D280              SETB    IDX0_IC595_SHCP
+                                           ; SOURCE LINE # 37
+0028 C280              CLR     IDX0_IC595_SHCP
+                                           ; SOURCE LINE # 38
+002A 0500        R     INC     i
+002C E500        R     MOV     A,i
+002E B408D8            CJNE    A,#08H,?C0002
+0031         ?C0003:
+                                           ; SOURCE LINE # 39
+0031 D282              SETB    IDX0_IC595_STCP
+                                           ; SOURCE LINE # 40
+0033 C282              CLR     IDX0_IC595_STCP
+                                           ; SOURCE LINE # 41
+0035 22                RET     
+0036         ?C0001:
+                                           ; SOURCE LINE # 42
+0036 ED                MOV     A,R5
+0037 6401              XRL     A,#01H
+0039 7031              JNZ     ?C0006
+                                           ; SOURCE LINE # 43
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 5   
+
+                                           ; SOURCE LINE # 45
+003B 8B00        R     MOV     STATE_595_1,R3
+                                           ; SOURCE LINE # 46
+003D F500        R     MOV     i,A
+003F         ?C0007:
+                                           ; SOURCE LINE # 47
+                                           ; SOURCE LINE # 48
+003F 7480              MOV     A,#080H
+0041 7E00              MOV     R6,#00H
+0043 A800        R     MOV     R0,i
+0045 08                INC     R0
+0046 8006              SJMP    ?C0033
+0048         ?C0032:
+0048 CE                XCH     A,R6
+0049 A2E7              MOV     C,ACC.7
+004B 13                RRC     A
+004C CE                XCH     A,R6
+004D 13                RRC     A
+004E         ?C0033:
+004E D8F8              DJNZ    R0,?C0032
+0050 FF                MOV     R7,A
+0051 EB                MOV     A,R3
+0052 F582              MOV     DPL,A
+0054 EF                MOV     A,R7
+0055 5582              ANL     A,DPL
+0057 24FF              ADD     A,#0FFH
+0059 B3                CPL     C
+005A 9284              MOV     IDX1_IC595_DS,C
+                                           ; SOURCE LINE # 49
+005C D283              SETB    IDX1_IC595_SHCP
+                                           ; SOURCE LINE # 50
+005E C283              CLR     IDX1_IC595_SHCP
+                                           ; SOURCE LINE # 51
+0060 0500        R     INC     i
+0062 E500        R     MOV     A,i
+0064 B408D8            CJNE    A,#08H,?C0007
+0067         ?C0008:
+                                           ; SOURCE LINE # 52
+0067 D285              SETB    IDX1_IC595_STCP
+                                           ; SOURCE LINE # 53
+0069 C285              CLR     IDX1_IC595_STCP
+                                           ; SOURCE LINE # 54
+006B 22                RET     
+006C         ?C0006:
+                                           ; SOURCE LINE # 55
+006C ED                MOV     A,R5
+006D 6402              XRL     A,#02H
+006F 702F              JNZ     ?C0011
+                                           ; SOURCE LINE # 56
+                                           ; SOURCE LINE # 58
+0071 8B00        R     MOV     STATE_595_2,R3
+                                           ; SOURCE LINE # 59
+0073 F500        R     MOV     i,A
+0075         ?C0012:
+                                           ; SOURCE LINE # 60
+                                           ; SOURCE LINE # 61
+0075 7480              MOV     A,#080H
+0077 7E00              MOV     R6,#00H
+0079 A800        R     MOV     R0,i
+007B 08                INC     R0
+007C 8006              SJMP    ?C0035
+007E         ?C0034:
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 6   
+
+007E CE                XCH     A,R6
+007F A2E7              MOV     C,ACC.7
+0081 13                RRC     A
+0082 CE                XCH     A,R6
+0083 13                RRC     A
+0084         ?C0035:
+0084 D8F8              DJNZ    R0,?C0034
+0086 FF                MOV     R7,A
+0087 EB                MOV     A,R3
+0088 FD                MOV     R5,A
+0089 EF                MOV     A,R7
+008A 5D                ANL     A,R5
+008B 24FF              ADD     A,#0FFH
+008D B3                CPL     C
+008E 9291              MOV     IDX2_IC595_DS,C
+                                           ; SOURCE LINE # 62
+0090 D290              SETB    IDX2_IC595_SHCP
+                                           ; SOURCE LINE # 63
+0092 C290              CLR     IDX2_IC595_SHCP
+                                           ; SOURCE LINE # 64
+0094 0500        R     INC     i
+0096 E500        R     MOV     A,i
+0098 B408DA            CJNE    A,#08H,?C0012
+009B         ?C0013:
+                                           ; SOURCE LINE # 65
+009B D292              SETB    IDX2_IC595_STCP
+                                           ; SOURCE LINE # 66
+009D C292              CLR     IDX2_IC595_STCP
+                                           ; SOURCE LINE # 67
+009F 22                RET     
+00A0         ?C0011:
+                                           ; SOURCE LINE # 70
+                                           ; SOURCE LINE # 72
+00A0 8B00        R     MOV     STATE_595_3,R3
+                                           ; SOURCE LINE # 73
+00A2 E4                CLR     A
+00A3 F500        R     MOV     i,A
+00A5         ?C0016:
+                                           ; SOURCE LINE # 74
+                                           ; SOURCE LINE # 75
+00A5 7480              MOV     A,#080H
+00A7 7E00              MOV     R6,#00H
+00A9 A800        R     MOV     R0,i
+00AB 08                INC     R0
+00AC 8006              SJMP    ?C0037
+00AE         ?C0036:
+00AE CE                XCH     A,R6
+00AF A2E7              MOV     C,ACC.7
+00B1 13                RRC     A
+00B2 CE                XCH     A,R6
+00B3 13                RRC     A
+00B4         ?C0037:
+00B4 D8F8              DJNZ    R0,?C0036
+00B6 FF                MOV     R7,A
+00B7 EB                MOV     A,R3
+00B8 FD                MOV     R5,A
+00B9 EF                MOV     A,R7
+00BA 5D                ANL     A,R5
+00BB 24FF              ADD     A,#0FFH
+00BD B3                CPL     C
+00BE 9294              MOV     IDX3_IC595_DS,C
+                                           ; SOURCE LINE # 76
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 7   
+
+00C0 D293              SETB    IDX3_IC595_SHCP
+                                           ; SOURCE LINE # 77
+00C2 C293              CLR     IDX3_IC595_SHCP
+                                           ; SOURCE LINE # 78
+00C4 0500        R     INC     i
+00C6 E500        R     MOV     A,i
+00C8 B408DA            CJNE    A,#08H,?C0016
+00CB         ?C0017:
+                                           ; SOURCE LINE # 79
+00CB D295              SETB    IDX3_IC595_STCP
+                                           ; SOURCE LINE # 80
+00CD C295              CLR     IDX3_IC595_STCP
+                                           ; SOURCE LINE # 81
+                                           ; SOURCE LINE # 84
+00CF         ?C0019:
+00CF 22                RET     
+             ; FUNCTION _OUT_BYTE_LED (END)
+
+             ; FUNCTION _OUT_BIT_LED (BEGIN)
+                                           ; SOURCE LINE # 88
+;---- Variable 'idx_595' assigned to Register 'R5' ----
+;---- Variable 'idx' assigned to Register 'R7' ----
+                                           ; SOURCE LINE # 89
+                                           ; SOURCE LINE # 90
+0000 ED                MOV     A,R5
+0001 7010              JNZ     ?C0020
+                                           ; SOURCE LINE # 91
+                                           ; SOURCE LINE # 92
+0003 04                INC     A
+0004 A807              MOV     R0,AR7
+0006 08                INC     R0
+0007 8002              SJMP    ?C0039
+0009         ?C0038:
+0009 C3                CLR     C
+000A 33                RLC     A
+000B         ?C0039:
+000B D8FC              DJNZ    R0,?C0038
+000D 4200        R     ORL     STATE_595_0,A
+                                           ; SOURCE LINE # 93
+000F AF00        R     MOV     R7,STATE_595_0
+                                           ; SOURCE LINE # 94
+0011 8037              SJMP    ?C0048
+0013         ?C0020:
+                                           ; SOURCE LINE # 95
+0013 BD0111            CJNE    R5,#01H,?C0022
+                                           ; SOURCE LINE # 96
+                                           ; SOURCE LINE # 97
+0016 7401              MOV     A,#01H
+0018 A807              MOV     R0,AR7
+001A 08                INC     R0
+001B 8002              SJMP    ?C0041
+001D         ?C0040:
+001D C3                CLR     C
+001E 33                RLC     A
+001F         ?C0041:
+001F D8FC              DJNZ    R0,?C0040
+0021 4200        R     ORL     STATE_595_1,A
+                                           ; SOURCE LINE # 98
+0023 AF00        R     MOV     R7,STATE_595_1
+0025         ?C0046:
+                                           ; SOURCE LINE # 99
+0025 8023              SJMP    ?C0048
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 8   
+
+0027         ?C0022:
+                                           ; SOURCE LINE # 100
+0027 BD0211            CJNE    R5,#02H,?C0024
+                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 102
+002A 7401              MOV     A,#01H
+002C A807              MOV     R0,AR7
+002E 08                INC     R0
+002F 8002              SJMP    ?C0043
+0031         ?C0042:
+0031 C3                CLR     C
+0032 33                RLC     A
+0033         ?C0043:
+0033 D8FC              DJNZ    R0,?C0042
+0035 4200        R     ORL     STATE_595_2,A
+                                           ; SOURCE LINE # 103
+0037 AF00        R     MOV     R7,STATE_595_2
+0039         ?C0047:
+                                           ; SOURCE LINE # 104
+0039 800F              SJMP    ?C0048
+003B         ?C0024:
+                                           ; SOURCE LINE # 106
+                                           ; SOURCE LINE # 107
+003B 7401              MOV     A,#01H
+003D A807              MOV     R0,AR7
+003F 08                INC     R0
+0040 8002              SJMP    ?C0045
+0042         ?C0044:
+0042 C3                CLR     C
+0043 33                RLC     A
+0044         ?C0045:
+0044 D8FC              DJNZ    R0,?C0044
+0046 4200        R     ORL     STATE_595_3,A
+                                           ; SOURCE LINE # 108
+0048 AF00        R     MOV     R7,STATE_595_3
+004A         ?C0048:
+004A 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 109
+                                           ; SOURCE LINE # 110
+004D         ?C0026:
+004D 22                RET     
+             ; FUNCTION _OUT_BIT_LED (END)
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 115
+                                           ; SOURCE LINE # 116
+                                           ; SOURCE LINE # 119
+0000 E4                CLR     A
+0001 FD                MOV     R5,A
+0002 FF                MOV     R7,A
+0003 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 120
+0006 7D01              MOV     R5,#01H
+0008 E4                CLR     A
+0009 FF                MOV     R7,A
+000A 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 121
+000D 7D02              MOV     R5,#02H
+000F E4                CLR     A
+0010 FF                MOV     R7,A
+0011 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 122
+C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 9   
+
+0014 7D03              MOV     R5,#03H
+0016 E4                CLR     A
+0017 FF                MOV     R7,A
+0018 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 125
+001B E4                CLR     A
+001C FD                MOV     R5,A
+001D 7FFF              MOV     R7,#0FFH
+001F 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 126
+0022 7D01              MOV     R5,#01H
+0024 7FFF              MOV     R7,#0FFH
+0026 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 127
+0029 7D02              MOV     R5,#02H
+002B 7FFF              MOV     R7,#0FFH
+002D 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 128
+0030 7D03              MOV     R5,#03H
+0032 7FFF              MOV     R7,#0FFH
+0034 120000      R     LCALL   _OUT_BYTE_LED
+                                           ; SOURCE LINE # 130
+0037 D2B0              SETB    button
+                                           ; SOURCE LINE # 131
+0039 E4                CLR     A
+003A F500        R     MOV     n,A
+003C         ?C0027:
+                                           ; SOURCE LINE # 132
+                                           ; SOURCE LINE # 133
+                                           ; SOURCE LINE # 134
+003C 80FE              SJMP    ?C0027
+             ; FUNCTION main (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    348    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
