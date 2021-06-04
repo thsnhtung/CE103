@@ -17,8 +17,8 @@ sbit IDX3_IC595_SHCP = P1^3;	  //xung clock
 sbit IDX3_IC595_DS = P1^4;	  // chan data
 sbit IDX3_IC595_STCP = P1^5;	// chan chot du lieu 
 
-sbit button = P3^0;
-sbit led1 = P3^1;
+sbit button = P3^6;
+sbit led1 = P3^7;
 unsigned char STATE_595_0 = 0x00;
 unsigned char STATE_595_1 = 0x00;
 unsigned char STATE_595_2 = 0x00;
@@ -122,14 +122,17 @@ void main()
 	OUT_BYTE_LED(0x00,3);
 	// CLEAR 32 LED
 	
-	OUT_BYTE_LED(0xff,0);
-	OUT_BYTE_LED(0xff,1);
-	OUT_BYTE_LED(0xff,2);
-	OUT_BYTE_LED(0xff,3);
+	OUT_BYTE_LED(0x00,0);
+	OUT_BYTE_LED(0x00,1);
+	OUT_BYTE_LED(0x00,2);
+	OUT_BYTE_LED(0x00,3);
+
+
 	
 	button = 1 ;
 	n = 0;
 	while(1)
 	{
+	
 	}
 }

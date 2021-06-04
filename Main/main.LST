@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -26,8 +26,8 @@ line level    source
   17          sbit IDX3_IC595_DS = P1^4;    // chan data
   18          sbit IDX3_IC595_STCP = P1^5;  // chan chot du lieu 
   19          
-  20          sbit button = P3^0;
-  21          sbit led1 = P3^1;
+  20          sbit button = P3^6;
+  21          sbit led1 = P3^7;
   22          unsigned char STATE_595_0 = 0x00;
   23          unsigned char STATE_595_1 = 0x00;
   24          unsigned char STATE_595_2 = 0x00;
@@ -62,7 +62,7 @@ line level    source
   53   2          IDX1_IC595_STCP = 0 ; 
   54   2        }
   55   1        else if (idx == 2)
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 2   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 2   
 
   56   1        {
   57   2          unsigned char i;
@@ -126,7 +126,7 @@ line level    source
  115          void main()
  116          {
  117   1        
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 3   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 3   
 
  118   1        // INIT 32 LED
  119   1        OUT_BYTE_LED(0x00,0);
@@ -135,18 +135,21 @@ line level    source
  122   1        OUT_BYTE_LED(0x00,3);
  123   1        // CLEAR 32 LED
  124   1        
- 125   1        OUT_BYTE_LED(0xff,0);
- 126   1        OUT_BYTE_LED(0xff,1);
- 127   1        OUT_BYTE_LED(0xff,2);
- 128   1        OUT_BYTE_LED(0xff,3);
- 129   1        
- 130   1        button = 1 ;
- 131   1        n = 0;
- 132   1        while(1)
- 133   1        {
- 134   2        }
- 135   1      }
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 4   
+ 125   1        OUT_BYTE_LED(0x00,0);
+ 126   1        OUT_BYTE_LED(0x00,1);
+ 127   1        OUT_BYTE_LED(0x00,2);
+ 128   1        OUT_BYTE_LED(0x00,3);
+ 129   1      
+ 130   1      
+ 131   1        
+ 132   1        button = 1 ;
+ 133   1        n = 0;
+ 134   1        while(1)
+ 135   1        {
+ 136   2        
+ 137   2        }
+ 138   1      }
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 4   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -210,7 +213,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0037 6401              XRL     A,#01H
 0039 7031              JNZ     ?C0006
                                            ; SOURCE LINE # 43
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 5   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 5   
 
                                            ; SOURCE LINE # 45
 003B 8B00        R     MOV     STATE_595_1,R3
@@ -274,7 +277,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 007B 08                INC     R0
 007C 8006              SJMP    ?C0035
 007E         ?C0034:
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 6   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 6   
 
 007E CE                XCH     A,R6
 007F A2E7              MOV     C,ACC.7
@@ -338,7 +341,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00BD B3                CPL     C
 00BE 9294              MOV     IDX3_IC595_DS,C
                                            ; SOURCE LINE # 76
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 7   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 7   
 
 00C0 D293              SETB    IDX3_IC595_SHCP
                                            ; SOURCE LINE # 77
@@ -402,7 +405,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0025         ?C0046:
                                            ; SOURCE LINE # 99
 0025 8023              SJMP    ?C0048
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 8   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 8   
 
 0027         ?C0022:
                                            ; SOURCE LINE # 100
@@ -466,7 +469,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0010 FF                MOV     R7,A
 0011 120000      R     LCALL   _OUT_BYTE_LED
                                            ; SOURCE LINE # 122
-C51 COMPILER V9.52.0.0   MAIN                                                              06/03/2021 21:17:01 PAGE 9   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 17:05:05 PAGE 9   
 
 0014 7D03              MOV     R5,#03H
 0016 E4                CLR     A
@@ -475,36 +478,39 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 125
 001B E4                CLR     A
 001C FD                MOV     R5,A
-001D 7FFF              MOV     R7,#0FFH
-001F 120000      R     LCALL   _OUT_BYTE_LED
+001D FF                MOV     R7,A
+001E 120000      R     LCALL   _OUT_BYTE_LED
                                            ; SOURCE LINE # 126
-0022 7D01              MOV     R5,#01H
-0024 7FFF              MOV     R7,#0FFH
-0026 120000      R     LCALL   _OUT_BYTE_LED
+0021 7D01              MOV     R5,#01H
+0023 E4                CLR     A
+0024 FF                MOV     R7,A
+0025 120000      R     LCALL   _OUT_BYTE_LED
                                            ; SOURCE LINE # 127
-0029 7D02              MOV     R5,#02H
-002B 7FFF              MOV     R7,#0FFH
-002D 120000      R     LCALL   _OUT_BYTE_LED
+0028 7D02              MOV     R5,#02H
+002A E4                CLR     A
+002B FF                MOV     R7,A
+002C 120000      R     LCALL   _OUT_BYTE_LED
                                            ; SOURCE LINE # 128
-0030 7D03              MOV     R5,#03H
-0032 7FFF              MOV     R7,#0FFH
-0034 120000      R     LCALL   _OUT_BYTE_LED
-                                           ; SOURCE LINE # 130
-0037 D2B0              SETB    button
-                                           ; SOURCE LINE # 131
-0039 E4                CLR     A
-003A F500        R     MOV     n,A
-003C         ?C0027:
+002F 7D03              MOV     R5,#03H
+0031 E4                CLR     A
+0032 FF                MOV     R7,A
+0033 120000      R     LCALL   _OUT_BYTE_LED
                                            ; SOURCE LINE # 132
+0036 D2B6              SETB    button
                                            ; SOURCE LINE # 133
+0038 E4                CLR     A
+0039 F500        R     MOV     n,A
+003B         ?C0027:
                                            ; SOURCE LINE # 134
-003C 80FE              SJMP    ?C0027
+                                           ; SOURCE LINE # 135
+                                           ; SOURCE LINE # 137
+003B 80FE              SJMP    ?C0027
              ; FUNCTION main (END)
 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    348    ----
+   CODE SIZE        =    347    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
