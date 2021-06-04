@@ -3,25 +3,15 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Zedge Mobile\Desktop\CE103\Main\Main.uvproj
+C:\Users\Asus\Desktop\CE103\CE103_PROJECT\Main\Main.uvproj
 Project File Date:  06/04/2021
 
 <h2>Output:</h2>
-<<<<<<< HEAD
 compiling main.c...
-main.c - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
-Program Size: data=15.0 xdata=0 code=503
-creating hex file from "Main"...
-"Main" - 0 Error(s), 1 Warning(s).
-=======
+main.c(157): warning C276: constant in condition expression
+main.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 assembling STARTUP.A51...
-compiling main.c...
-MAIN.C(157): warning C276: constant in condition expression
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?CHECK?MAIN
@@ -29,7 +19,524 @@ linking...
     SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
     CALLER1: ?C_C51STARTUP
     CALLER2: ?PR?ISR_UART?MAIN
-Program Size: data=19.0 xdata=0 code=701
+Program Size: data=19.0 xdata=0 code=674
 creating hex file from "Main"...
-"Main" - 0 Error(s), 3 Warning(s).
->>>>>>> 05ad622e033ea26274c0da0fafc1a99939653f8e
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(154): error C141: syntax error near '='
+main.c(154): error C141: syntax error near ')'
+main.c(158): error C141: syntax error near 'else'
+main.c - 3 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(161): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(161): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(145): error C141: syntax error near 'and'
+main.c(145): error C202: 'and': undefined identifier
+main.c(145): error C141: syntax error near ')'
+main.c(156): error C141: syntax error near 'else'
+main.c - 4 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(150): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(150): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(151): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(151): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(151): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(151): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(151): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(151): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(133): error C141: syntax error near 'and'
+main.c(133): error C202: 'and': undefined identifier
+main.c(133): error C141: syntax error near ')'
+main.c(144): error C141: syntax error near 'else'
+main.c - 4 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(151): warning C206: 'Mode1_Handler': missing function-prototype
+main.c(151): error C267: 'Mode1_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(35): error C141: syntax error near 'and'
+main.c(35): error C202: 'and': undefined identifier
+main.c(35): error C141: syntax error near ')'
+main.c(46): error C141: syntax error near 'else'
+main.c - 4 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(37): warning C206: 'OUT_BYTE_LED': missing function-prototype
+main.c(37): error C267: 'OUT_BYTE_LED': requires ANSI-style prototype
+main.c(55): error C231: 'OUT_BYTE_LED': redefinition
+main.c(111): error C231: 'OUT_BYTE_LED': redefinition
+main.c - 3 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(174): warning C206: 'Mode2_Handler': missing function-prototype
+main.c(174): error C267: 'Mode2_Handler': requires ANSI-style prototype
+main.c - 1 Error(s), 1 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=681
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=683
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=685
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=685
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=687
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=688
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=688
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=20.0 xdata=0 code=707
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=20.0 xdata=0 code=705
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=688
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=688
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(158): warning C280: 'Data': unreferenced local variable
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=686
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=686
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=686
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=686
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=688
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=686
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=684
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=684
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=684
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=681
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=684
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(131): error C202: 'SMOD': undefined identifier
+main.c(132): error C141: syntax error near 'TR1'
+main.c - 2 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(131): error C202: 'SMOD': undefined identifier
+main.c(132): error C141: syntax error near 'TR1'
+Target not created
+compiling main.c...
+main.c(131): error C202: 'SMOD': undefined identifier
+main.c - 1 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(131): error C141: syntax error near '='
+main.c - 1 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(126): error C231: 'SCON': redefinition
+main.c - 1 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(126): error C146: 'PCON': invalid base address
+main.c(133): error C202: 'SCON1': undefined identifier
+main.c - 2 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(126): error C146: 'PCON': invalid base address
+main.c(133): error C202: 'SCON1': undefined identifier
+main.c(134): error C202: 'SMOD': undefined identifier
+main.c - 3 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+main.c(134): error C202: 'SCON1': undefined identifier
+main.c(135): error C202: 'SMOD': undefined identifier
+main.c - 3 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+main.c(134): error C202: 'SCON1': undefined identifier
+main.c(135): error C202: 'SMOD': undefined identifier
+main.c - 3 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+main.c(135): error C202: 'SMOD': undefined identifier
+main.c - 2 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+main.c(134): error C202: 'SMOD': undefined identifier
+main.c(135): error C202: 'SMOD': undefined identifier
+main.c - 3 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+main.c - 1 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(20): error C146: 'PCON': invalid base address
+Target not created
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=693
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(163): error C141: syntax error near 'H'
+main.c(163): error C202: 'H': undefined identifier
+main.c - 2 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(163): error C141: syntax error near 'H'
+main.c(163): error C202: 'H': undefined identifier
+Target not created
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=697
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OUT_BIT_LED?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=698
+creating hex file from "Main"...
+"Main" - 0 Error(s), 2 Warning(s).
