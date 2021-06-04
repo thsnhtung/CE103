@@ -23,6 +23,14 @@ unsigned char STATE_595_0 = 0x00;
 unsigned char STATE_595_1 = 0x00;
 unsigned char STATE_595_2 = 0x00;
 unsigned char STATE_595_3 = 0x00;
+////////////////////////////////
+unsigned char n;
+unsigned char START_BYTE=1;
+unsigned char MODE=1;
+
+
+
+
 
 void OUT_BYTE_LED(unsigned char value, unsigned char idx)
 {
@@ -108,28 +116,110 @@ void OUT_BIT_LED(unsigned char idx, unsigned char idx_595)
 		OUT_BYTE_LED(STATE_595_3, idx_595);
 	}
 }
+ /////////////////////////////
+//khoi tao
+void UART_Init()
+{
+	TMOD = 0x20;		/* Timer 1, 8-bit auto reload mode */
+	TH1 = 0xFD;		/* Load value for 9600 baud rate */
+	SCON = 0x50;		/* Mode 1, reception enable */
+	TR1 = 1;
+	IE=0X90;		/* Start timer 1 */
+}
 
+/////////////////////////////
+ void check()
+{
+  if(START_BYTE!=0 && MODE!=0)
+  {
+   OUT_BIT_LED(START_BYTE,MODE);
+  }
 
-unsigned char n;
+  
+
+}
+//ngat nhan UART
+//unsigned char temp=0;
+unsigned char dem=0;
+void ISR_UART(void) interrupt 4
+{
+ 
+ if(RI == 1)           //Kiem tra xem la ngat nhan hay truyen
+ {	
+    n = SBUF;   //nhan du lieu
+    RI = 0;
+	if(n==0)
+	{
+	  if (START_BYTE==0)
+	  {
+	  START_BYTE=1;
+	  }
+	  else if (START_BYTE=1)
+	  { 
+	  	 if(n<4)
+		 {  MODE=n;  }
+		 else { START_BYTE=0;MODE=0;}
+	  
+	  
+	   }
+	
+	}
+	else
+	{
+	 if(START_BYTE==0){OUT_BIT_LED(1,1);}
+	 else {
+	 if(MODE==0 && n<4){MODE=n;}
+	 else if(MODE==0 && n>=4){OUT_BIT_LED(1,1);}
+	 
+	 if(MODE!=0)
+	 { if(dem<=4)
+	  { OUT_BIT_LED(n,MODE);
+	     dem++;
+    	}
+		else 
+		{
+		 OUT_BIT_LED(1,1);
+		 dem=0;
+		}
+	 
+	 }
+	 
+	 
+	   }
+
+	
+	
+	
+	}
+ }
+
+ else if (TI==1)
+ {
+ 	TI=0;
+ }
+}
 
 void main()
 {
 	
-	// INIT 32 LED
+//	// INIT 32 LED
 	OUT_BYTE_LED(0x00,0);
 	OUT_BYTE_LED(0x00,1);
 	OUT_BYTE_LED(0x00,2);
 	OUT_BYTE_LED(0x00,3);
 	// CLEAR 32 LED
-	
-	OUT_BYTE_LED(0xff,0);
-	OUT_BYTE_LED(0xff,1);
-	OUT_BYTE_LED(0xff,2);
-	OUT_BYTE_LED(0xff,3);
-	
-	button = 1 ;
-	n = 0;
+//	
+	OUT_BYTE_LED(0x00,0);
+	OUT_BYTE_LED(0x00,1);
+	OUT_BYTE_LED(0x00,2);
+	OUT_BYTE_LED(0x00,3);
+//	
+//	button = 1 ;
+//	n = 0;
+   UART_Init();
+   	 
 	while(1)
 	{
+		 
 	}
 }
