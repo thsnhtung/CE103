@@ -3,10 +3,11 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Asus\Desktop\CE103\CE103_PROJECT\Main\Main.uvproj
-Project File Date:  06/03/2021
+C:\Users\Zedge Mobile\Desktop\CE103\Main\Main.uvproj
+Project File Date:  06/04/2021
 
 <h2>Output:</h2>
+<<<<<<< HEAD
 compiling main.c...
 main.c - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
@@ -16,3 +17,19 @@ linking...
 Program Size: data=15.0 xdata=0 code=503
 creating hex file from "Main"...
 "Main" - 0 Error(s), 1 Warning(s).
+=======
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+MAIN.C(157): warning C276: constant in condition expression
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECK?MAIN
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_OUT_BYTE_LED?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?ISR_UART?MAIN
+Program Size: data=19.0 xdata=0 code=701
+creating hex file from "Main"...
+"Main" - 0 Error(s), 3 Warning(s).
+>>>>>>> 05ad622e033ea26274c0da0fafc1a99939653f8e
