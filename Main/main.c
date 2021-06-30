@@ -21,6 +21,8 @@ sbit ledStart = P3^4;
 sbit ledUart = P3^5;
 sbit button = P3^6;
 sbit led1 = P3^7;
+sbit ledCustom = P1^7 ;
+sbit ledCheck = P1^6 ;
 
 unsigned char STATE_595_0 = 0x00;
 unsigned char STATE_595_1 = 0x00;
@@ -34,7 +36,7 @@ unsigned char Count = 0 ;
 ////////////////////////////////
 unsigned char isReceiveLength =  0;
 unsigned char lengthOfEffect = 0 ;
-unsigned char storage[100];
+unsigned char storage[10] = {0xff, 0xff, 0xff ,0xff, 0x50, 0x00, 0x00, 0x00 ,0x00, 0x50} ;
 // unsigned char isStateOrDelay = 0 ; // = 0 means wait for led value, =1 means wait for delay value
 
 
@@ -162,15 +164,19 @@ void CustomMode_Handler(unsigned char Data)
 	if (isReceiveLength == 0)
 	{
 		lengthOfEffect = Data;
+		isReceiveLength = 1;
 	}
 	else
 	{
-		if (Count == lengthOfEffect * 2)
+		if (Count == lengthOfEffect * 5)
 		{
-			// nhan du roi, ignore
+			OUT_BYTE_LED(0xff,0);
+			START_BYTE = 0 ;						// nhan du roi clear mode
+			MODE = 0 ;							
 		}
 		else
 		{
+			ledCheck = ~ledCheck;
 			storage[Count] = Data; 
 			Count++ ;
 		}
@@ -182,17 +188,19 @@ void CustomMode_Handler(unsigned char Data)
 void Receive_Handler(unsigned char Data)
 {
 	TI = 0 ; 								// send uart de kiem tra
-	SBUF = Data ; 
 	Data -= 0x30;						// se xoa 
+	SBUF = Data ; 
 	while(TI ==0);
 	TI = 0;
 	if (START_BYTE == 0 && Data == 0)			// chua co du lieu va nhan duoc start_byte
 	{
+		ledCustom = 0;
+		isReceiveLength = 0;								// clear custom
 		Count = 0 ;
-		ledStart = 0 ;
+		ledStart = 1 ;
 		START_BYTE = 1;
 	}
-	else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 3))  // neu da start va mode chua co, thi check xem mode byte co dung format k __ mode 1 mode 2
+	else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 5))  // neu da start va mode chua co, thi check xem mode byte co dung format k __ mode 1 mode 2
 	{
 		MODE = Data;
 	}
@@ -200,10 +208,15 @@ void Receive_Handler(unsigned char Data)
 	{
 		if (MODE == 1 || MODE == 2 || MODE == 3)
 		{
+			ledCustom = 0;
 			HardMode_Handler(Data);
 		}
 		else if (MODE == 4)
+		{
+			ledCustom = ~ledCustom;
 			CustomMode_Handler(Data);
+		}
+		
 		else
 		{
 			// Turn on LED
@@ -212,10 +225,29 @@ void Receive_Handler(unsigned char Data)
 	}
 	else				// chua hop sai
 	{
+		ledCustom = 0;
+		ledStart = 0 ;
 		START_BYTE = 0 ;
 		MODE = 0 ;
 	}
 	RI = 0;
+}
+
+
+void Custom_delay (unsigned char delayTime)
+{
+	unsigned char k ; 
+	for (k = 0 ; k < delayTime*10; k ++)
+	{
+		TMOD = 0x21; 
+		TF0 = 0; 
+		TH0 = 0xfc ; 
+		TL0 = 0x66; // thach anh = 12 TL0 = 0x18;
+		TR0 = 1; 
+		while(!TF0);
+		TF0 = 0; 
+		TR0 = 0 ;
+	}
 }
 
 
@@ -233,6 +265,7 @@ void ISR_UART(void) interrupt 4
 		TI=0;
 	}
 }
+
 
 
 
@@ -255,20 +288,39 @@ void main()
    	 
 	while(1)
 	{
-		 if (Count == lengthOfEffect * 2 && isReceiveLength == 1)					// neu da nhan duoc tin hieu thi 
-		 {
-			unsigned char i;
-			for (i = 0 ; i < lengthOfEffect*2 ; i++)
+		/*
+		unsigned char i;
+		//if (Count == lengthOfEffect * 5 && isReceiveLength == 1)					// neu da nhan duoc tin hieu thi 
+		//{
+			//MODE = 0 ;						// clear and wait for another mode
+			//START_BYTE = 0 ; 
+			
+			for (i = 0 ; i < 10 ; i++)
 			{
-				if (i % 2 == 0)
+				TI = 0 ; 								// send uart de kiem tra
+				SBUF = i ; 
+				while(TI ==0);
+				TI = 0;
+				if (i % 5 == 4)				
 				{
-					OUT_BYTE_LED(storage[i],0);
+					Custom_delay(storage[i]);
 				}
 				else
 				{
-					custom_delay(storage[i],0);
+					OUT_BYTE_LED(0x0f, i % 5);
 				}
 			}
-		 }
+		//}
+			
+			*/
+			OUT_BYTE_LED(0x00,0);
+			OUT_BYTE_LED(0x00,1);
+			OUT_BYTE_LED(0x00,2);
+			OUT_BYTE_LED(0x00,3);
+			Custom_delay(200);
+			OUT_BYTE_LED(0xf0,0);
+			OUT_BYTE_LED(0xf0,1);
+			OUT_BYTE_LED(0xf0,2);
+			OUT_BYTE_LED(0xf0,3);
 	}
 }
