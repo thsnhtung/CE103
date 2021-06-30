@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 18:20:46 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 10:52:24 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -40,230 +40,237 @@ line level    source
   31          unsigned char START_BYTE= 0;
   32          unsigned char MODE= 0;
   33          unsigned char Count = 0 ;
-  34          
-  35          
-  36          
-  37          
+  34          ////////////////////////////////
+  35          unsigned char lengthOfEffect = 0 ;
+  36          unsigned char storage[100];
+  37          unsigned char isStateOrDelay = 0 ; // = 0 means wait for led value, =1 means wait for delay value
   38          
-  39          void OUT_BYTE_LED(unsigned char value, unsigned char idx)
-  40          {
-  41   1        if (idx == 0)
-  42   1        {
-  43   2          unsigned char i;
-  44   2          STATE_595_0 = value;
-  45   2          for (i = 0 ; i < 8 ; i++)
-  46   2          {
-  47   3            IDX0_IC595_DS = !(value & (0x80 >>i));
-  48   3            IDX0_IC595_SHCP = 1;
-  49   3            IDX0_IC595_SHCP = 0 ;
-  50   3          }
-  51   2          IDX0_IC595_STCP = 1 ;
-  52   2          IDX0_IC595_STCP = 0 ; 
-  53   2        }
-  54   1        else if (idx == 1)
-  55   1        {
-C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 18:20:46 PAGE 2   
+  39          
+  40          
+  41          void OUT_BYTE_LED(unsigned char value, unsigned char idx)
+  42          {
+  43   1        if (idx == 0)
+  44   1        {
+  45   2          unsigned char i;
+  46   2          STATE_595_0 = value;
+  47   2          for (i = 0 ; i < 8 ; i++)
+  48   2          {
+  49   3            IDX0_IC595_DS = !(value & (0x80 >>i));
+  50   3            IDX0_IC595_SHCP = 1;
+  51   3            IDX0_IC595_SHCP = 0 ;
+  52   3          }
+  53   2          IDX0_IC595_STCP = 1 ;
+  54   2          IDX0_IC595_STCP = 0 ; 
+  55   2        }
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 10:52:24 PAGE 2   
 
-  56   2          unsigned char i;
-  57   2          STATE_595_1 = value;
-  58   2          for (i = 0 ; i < 8 ; i++)
-  59   2          {
-  60   3            IDX1_IC595_DS = !(value & (0x80 >>i));
-  61   3            IDX1_IC595_SHCP = 1;
-  62   3            IDX1_IC595_SHCP = 0 ;
-  63   3          }
-  64   2          IDX1_IC595_STCP = 1 ;
-  65   2          IDX1_IC595_STCP = 0 ; 
-  66   2        }
-  67   1        else if (idx == 2)
-  68   1        {
-  69   2          unsigned char i;
-  70   2          STATE_595_2 = value;
-  71   2          for (i = 0 ; i < 8 ; i++)
-  72   2          {
-  73   3            IDX2_IC595_DS = !(value & (0x80 >>i));
-  74   3            IDX2_IC595_SHCP = 1;
-  75   3            IDX2_IC595_SHCP = 0 ;
-  76   3          }
-  77   2          IDX2_IC595_STCP = 1 ;
-  78   2          IDX2_IC595_STCP = 0 ; 
-  79   2        }
-  80   1        
-  81   1        else 
-  82   1        {
-  83   2          unsigned char i;
-  84   2          STATE_595_3 = value;
-  85   2          for (i = 0 ; i < 8 ; i++)
-  86   2          {
-  87   3            IDX3_IC595_DS = !(value & (0x80 >>i));
-  88   3            IDX3_IC595_SHCP = 1;
-  89   3            IDX3_IC595_SHCP = 0 ;
-  90   3          }
-  91   2          IDX3_IC595_STCP = 1 ;
-  92   2          IDX3_IC595_STCP = 0 ; 
-  93   2        }
-  94   1        
-  95   1        
-  96   1      }
-  97          
-  98          
+  56   1        else if (idx == 1)
+  57   1        {
+  58   2          unsigned char i;
+  59   2          STATE_595_1 = value;
+  60   2          for (i = 0 ; i < 8 ; i++)
+  61   2          {
+  62   3            IDX1_IC595_DS = !(value & (0x80 >>i));
+  63   3            IDX1_IC595_SHCP = 1;
+  64   3            IDX1_IC595_SHCP = 0 ;
+  65   3          }
+  66   2          IDX1_IC595_STCP = 1 ;
+  67   2          IDX1_IC595_STCP = 0 ; 
+  68   2        }
+  69   1        else if (idx == 2)
+  70   1        {
+  71   2          unsigned char i;
+  72   2          STATE_595_2 = value;
+  73   2          for (i = 0 ; i < 8 ; i++)
+  74   2          {
+  75   3            IDX2_IC595_DS = !(value & (0x80 >>i));
+  76   3            IDX2_IC595_SHCP = 1;
+  77   3            IDX2_IC595_SHCP = 0 ;
+  78   3          }
+  79   2          IDX2_IC595_STCP = 1 ;
+  80   2          IDX2_IC595_STCP = 0 ; 
+  81   2        }
+  82   1        
+  83   1        else 
+  84   1        {
+  85   2          unsigned char i;
+  86   2          STATE_595_3 = value;
+  87   2          for (i = 0 ; i < 8 ; i++)
+  88   2          {
+  89   3            IDX3_IC595_DS = !(value & (0x80 >>i));
+  90   3            IDX3_IC595_SHCP = 1;
+  91   3            IDX3_IC595_SHCP = 0 ;
+  92   3          }
+  93   2          IDX3_IC595_STCP = 1 ;
+  94   2          IDX3_IC595_STCP = 0 ; 
+  95   2        }
+  96   1        
+  97   1        
+  98   1      }
   99          
- 100          void OUT_BIT_LED(unsigned char idx, unsigned char idx_595)
- 101          {
- 102   1        if (idx_595 == 0)
- 103   1        {
- 104   2          STATE_595_0 |= (0x01 << idx) ; 
- 105   2          OUT_BYTE_LED(STATE_595_0, idx_595);
- 106   2        }
- 107   1        else if (idx_595 == 1)
- 108   1        {
- 109   2          STATE_595_1 |= (0x01 << idx) ; 
- 110   2          OUT_BYTE_LED(STATE_595_1, idx_595);
- 111   2        }
- 112   1        else if (idx_595 == 2)
- 113   1        {
- 114   2          STATE_595_2 |= (0x01 << idx) ; 
- 115   2          OUT_BYTE_LED(STATE_595_2, idx_595);
- 116   2        }
- 117   1        else 
-C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 18:20:46 PAGE 3   
+ 100          
+ 101          
+ 102          void OUT_BIT_LED(unsigned char idx, unsigned char idx_595)
+ 103          {
+ 104   1        if (idx_595 == 0)
+ 105   1        {
+ 106   2          STATE_595_0 |= (0x01 << idx) ; 
+ 107   2          OUT_BYTE_LED(STATE_595_0, idx_595);
+ 108   2        }
+ 109   1        else if (idx_595 == 1)
+ 110   1        {
+ 111   2          STATE_595_1 |= (0x01 << idx) ; 
+ 112   2          OUT_BYTE_LED(STATE_595_1, idx_595);
+ 113   2        }
+ 114   1        else if (idx_595 == 2)
+ 115   1        {
+ 116   2          STATE_595_2 |= (0x01 << idx) ; 
+ 117   2          OUT_BYTE_LED(STATE_595_2, idx_595);
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 10:52:24 PAGE 3   
 
- 118   1        {
- 119   2          STATE_595_3 |= (0x01 << idx) ; 
- 120   2          OUT_BYTE_LED(STATE_595_3, idx_595);
- 121   2        }
- 122   1      }
- 123           /////////////////////////////
- 124          
- 125          
- 126          //khoi tao
- 127          void UART_Init()
- 128          {
- 129   1        TMOD = 0x20;    /* Timer 1, 8-bit auto reload mode */
- 130   1        TH1 = 0xFD;   /* Load value for 9600 baud rate */ //F3
- 131   1        SCON = 0x50;    /* Mode 1, reception enable */
- 132   1        TR1 = 1;
- 133   1        IE=0X90;    /* Start timer 1 */
- 134   1      }
- 135          
- 136          
- 137          void Mode1_Handler(unsigned char Data)
- 138          {
- 139   1        if (Data >= 0 && Data < 256)
- 140   1        {
- 141   2          OUT_BYTE_LED(Data, Count);
- 142   2          Count++;
- 143   2          if (Count == 4)
- 144   2          {
- 145   3            Count = 0 ;
- 146   3            START_BYTE = 0 ;
- 147   3            MODE = 0 ;
- 148   3          }
- 149   2        }
- 150   1        else
- 151   1        {
- 152   2          // Out of range data 307,2
- 153   2          // led on
- 154   2        }
- 155   1      }
- 156          
- 157          
+ 118   2        }
+ 119   1        else 
+ 120   1        {
+ 121   2          STATE_595_3 |= (0x01 << idx) ; 
+ 122   2          OUT_BYTE_LED(STATE_595_3, idx_595);
+ 123   2        }
+ 124   1      }
+ 125           /////////////////////////////
+ 126          
+ 127          
+ 128          //khoi tao
+ 129          void UART_Init()
+ 130          {
+ 131   1        TMOD = 0x20;    /* Timer 1, 8-bit auto reload mode */
+ 132   1        TH1 = 0xFD;   /* Load value for 9600 baud rate */ //F3
+ 133   1        SCON = 0x50;    /* Mode 1, reception enable */
+ 134   1        TR1 = 1;
+ 135   1        IE=0X90;    /* Start timer 1 */
+ 136   1      }
+ 137          
+ 138          
+ 139          void HardMode_Handler(unsigned char Data)
+ 140          {
+ 141   1        if (Data >= 0 && Data < 256)
+ 142   1        {
+ 143   2          OUT_BYTE_LED(Data, Count);
+ 144   2          Count++;
+ 145   2          if (Count == 4)
+ 146   2          {
+ 147   3            Count = 0 ;         
+ 148   3            START_BYTE = 0 ;
+ 149   3            MODE = 0 ;              // clear mode
+ 150   3          }
+ 151   2        }
+ 152   1        else
+ 153   1        {
+ 154   2          // Out of range data 307,2
+ 155   2          // led on
+ 156   2        }
+ 157   1      }
  158          
- 159          void Receive_Handler(unsigned char Data)
+ 159          void CustomMode_Handler(unsigned char Data)
  160          {
- 161   1        TI = 0 ; 
- 162   1        SBUF = Data ; 
- 163   1        Data -= 0x30;
- 164   1        while(TI ==0);
- 165   1        TI = 0;
- 166   1        if (START_BYTE == 0 && Data == 0)     // chua co du lieu va nhan duoc start_byte
- 167   1        {
- 168   2          ledStart = 0 ;
- 169   2          START_BYTE = 1;
- 170   2        }
- 171   1        else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 3))  // neu da start va mode chua co, thi ch
+ 161   1        
+ 162   1      }
+*** WARNING C280 IN LINE 159 OF main.c: 'Data': unreferenced local variable
+ 163          
+ 164          
+ 165          void Receive_Handler(unsigned char Data)
+ 166          {
+ 167   1        TI = 0 ;                // send uart de kiem tra
+ 168   1        SBUF = Data ; 
+ 169   1        Data -= 0x30;           // se xoa 
+ 170   1        while(TI ==0);
+ 171   1        TI = 0;
+ 172   1        if (START_BYTE == 0 && Data == 0)     // chua co du lieu va nhan duoc start_byte
+ 173   1        {
+ 174   2          ledStart = 0 ;
+ 175   2          START_BYTE = 1;
+ 176   2        }
+ 177   1        else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 3))  // neu da start va mode chua co, thi ch
              -eck xem mode byte co dung format k __ mode 1 mode 2
- 172   1        {
- 173   2          MODE = Data;
- 174   2        }
- 175   1        else if (START_BYTE !=0 && MODE != 0)
- 176   1        {
- 177   2          if (MODE == 1)
- 178   2          {
-C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 18:20:46 PAGE 4   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 10:52:24 PAGE 4   
 
- 179   3            Mode1_Handler(Data);
- 180   3          }
- 181   2          else if (MODE == 2)
- 182   2            Mode1_Handler(Data);
- 183   2          else
+ 178   1        {
+ 179   2          MODE = Data;
+ 180   2        }
+ 181   1        else if (START_BYTE !=0 && MODE != 0)
+ 182   1        {
+ 183   2          if (MODE == 1 || MODE == 2 || MODE == 3)
  184   2          {
- 185   3            // Turn on LED
- 186   3            // should not reach here
- 187   3          }
- 188   2        }
- 189   1        else        // chua hop sai
- 190   1        {
- 191   2          START_BYTE = 0 ;
- 192   2          MODE = 0 ;
- 193   2        }
- 194   1        RI = 0;
- 195   1      }
- 196          
- 197          
- 198          void ISR_UART(void) interrupt 4
- 199          {
- 200   1        if(RI == 1)           //Kiem tra xem la ngat nhan hay truyen
- 201   1        { 
- 202   2          ledUart = ~ledUart;
- 203   2          r_data = SBUF;          //nhan du lieu
- 204   2          Receive_Handler(r_data);
- 205   2        }
- 206   1      
- 207   1        else if (TI==1)
- 208   1        {
- 209   2          TI=0;
- 210   2        }
- 211   1      }
- 212          
- 213          
- 214          
- 215          
- 216          void main()
- 217          {
- 218   1        
- 219   1      //  // INIT 32 LED
- 220   1        OUT_BYTE_LED(0x00,0);
- 221   1        OUT_BYTE_LED(0x00,1);
- 222   1        OUT_BYTE_LED(0x00,2);
- 223   1        OUT_BYTE_LED(0x00,3);
+ 185   3            HardMode_Handler(Data);
+ 186   3          }
+ 187   2          else if (MODE == 4)
+ 188   2            CustomMode_Handler(Data);
+ 189   2          else
+ 190   2          {
+ 191   3            // Turn on LED
+ 192   3            // should not reach here
+ 193   3          }
+ 194   2        }
+ 195   1        else        // chua hop sai
+ 196   1        {
+ 197   2          START_BYTE = 0 ;
+ 198   2          MODE = 0 ;
+ 199   2        }
+ 200   1        RI = 0;
+ 201   1      }
+ 202          
+ 203          
+ 204          void ISR_UART(void) interrupt 4
+ 205          {
+ 206   1        if(RI == 1)           //Kiem tra xem la ngat nhan hay truyen
+ 207   1        { 
+ 208   2          ledUart = ~ledUart;
+ 209   2          r_data = SBUF;          //nhan du lieu
+ 210   2          Receive_Handler(r_data);
+ 211   2        }
+ 212   1      
+ 213   1        else if (TI==1)
+ 214   1        {
+ 215   2          TI=0;
+ 216   2        }
+ 217   1      }
+ 218          
+ 219          
+ 220          
+ 221          
+ 222          void main()
+ 223          {
  224   1        
- 225   1        OUT_BYTE_LED(0x00,0);
- 226   1        OUT_BYTE_LED(0x00,1);
- 227   1        OUT_BYTE_LED(0x00,2);
- 228   1        OUT_BYTE_LED(0x00,3);
- 229   1        
- 230   1        UART_Init();
- 231   1           
- 232   1        while(1)
- 233   1        {
- 234   2           
- 235   2      
- 236   2        }
- 237   1      }
+ 225   1      //  // INIT 32 LED
+ 226   1        OUT_BYTE_LED(0x00,0);
+ 227   1        OUT_BYTE_LED(0x00,1);
+ 228   1        OUT_BYTE_LED(0x00,2);
+ 229   1        OUT_BYTE_LED(0x00,3);
+ 230   1        
+ 231   1        OUT_BYTE_LED(0x00,0);
+ 232   1        OUT_BYTE_LED(0x00,1);
+ 233   1        OUT_BYTE_LED(0x00,2);
+ 234   1        OUT_BYTE_LED(0x00,3);
+ 235   1        
+ 236   1        UART_Init();
+ 237   1           
+ 238   1        while(1)
+ 239   1        {
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 10:52:24 PAGE 5   
+
+ 240   2           
+ 241   2      
+ 242   2        }
+ 243   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V9.52.0.0   MAIN                                                              06/04/2021 18:20:46 PAGE 5   
-
-   CODE SIZE        =    530    ----
+   CODE SIZE        =    548    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      8       1
+   DATA SIZE        =    110       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

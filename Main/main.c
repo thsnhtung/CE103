@@ -31,8 +31,11 @@ unsigned char r_data;
 unsigned char START_BYTE= 0;
 unsigned char MODE= 0;
 unsigned char Count = 0 ;
-
-
+////////////////////////////////
+unsigned char isReceiveLength =  0;
+unsigned char lengthOfEffect = 0 ;
+unsigned char storage[100];
+// unsigned char isStateOrDelay = 0 ; // = 0 means wait for led value, =1 means wait for delay value
 
 
 
@@ -134,7 +137,7 @@ void UART_Init()
 }
 
 
-void Mode1_Handler(unsigned char Data)
+void HardMode_Handler(unsigned char Data)
 {
 	if (Data >= 0 && Data < 256)
 	{
@@ -142,9 +145,9 @@ void Mode1_Handler(unsigned char Data)
 		Count++;
 		if (Count == 4)
 		{
-			Count = 0 ;
+			Count = 0 ;					
 			START_BYTE = 0 ;
-			MODE = 0 ;
+			MODE = 0 ;							// clear mode
 		}
 	}
 	else
@@ -154,17 +157,38 @@ void Mode1_Handler(unsigned char Data)
 	}
 }
 
+void CustomMode_Handler(unsigned char Data)
+{
+	if (isReceiveLength == 0)
+	{
+		lengthOfEffect = Data;
+	}
+	else
+	{
+		if (Count == lengthOfEffect * 2)
+		{
+			// nhan du roi, ignore
+		}
+		else
+		{
+			storage[Count] = Data; 
+			Count++ ;
+		}
+		
+	}
+}
 
 
 void Receive_Handler(unsigned char Data)
 {
-	TI = 0 ; 
+	TI = 0 ; 								// send uart de kiem tra
 	SBUF = Data ; 
-	Data -= 0x30;
+	Data -= 0x30;						// se xoa 
 	while(TI ==0);
 	TI = 0;
 	if (START_BYTE == 0 && Data == 0)			// chua co du lieu va nhan duoc start_byte
 	{
+		Count = 0 ;
 		ledStart = 0 ;
 		START_BYTE = 1;
 	}
@@ -174,12 +198,12 @@ void Receive_Handler(unsigned char Data)
 	}
 	else if (START_BYTE !=0 && MODE != 0)
 	{
-		if (MODE == 1)
+		if (MODE == 1 || MODE == 2 || MODE == 3)
 		{
-			Mode1_Handler(Data);
+			HardMode_Handler(Data);
 		}
-		else if (MODE == 2)
-			Mode1_Handler(Data);
+		else if (MODE == 4)
+			CustomMode_Handler(Data);
 		else
 		{
 			// Turn on LED
@@ -231,7 +255,20 @@ void main()
    	 
 	while(1)
 	{
-		 
-
+		 if (Count == lengthOfEffect * 2 && isReceiveLength == 1)					// neu da nhan duoc tin hieu thi 
+		 {
+			unsigned char i;
+			for (i = 0 ; i < lengthOfEffect*2 ; i++)
+			{
+				if (i % 2 == 0)
+				{
+					OUT_BYTE_LED(storage[i],0);
+				}
+				else
+				{
+					custom_delay(storage[i],0);
+				}
+			}
+		 }
 	}
 }
