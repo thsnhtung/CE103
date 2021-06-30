@@ -36,7 +36,7 @@ unsigned char Count = 0 ;
 ////////////////////////////////
 unsigned char isReceiveLength =  0;
 unsigned char lengthOfEffect = 0 ;
-unsigned char storage[10] = {0xff, 0xff, 0xff ,0xff, 0x50, 0x00, 0x00, 0x00 ,0x00, 0x50} ;
+unsigned char storage[100];
 // unsigned char isStateOrDelay = 0 ; // = 0 means wait for led value, =1 means wait for delay value
 
 
@@ -131,7 +131,7 @@ void OUT_BIT_LED(unsigned char idx, unsigned char idx_595)
 //khoi tao
 void UART_Init()
 {
-	TMOD = 0x20;		/* Timer 1, 8-bit auto reload mode */
+	TMOD = 0x21;		/* Timer 1, 8-bit auto reload mode */
 	TH1 = 0xFD;		/* Load value for 9600 baud rate */ //F3
 	SCON = 0x50;		/* Mode 1, reception enable */
 	TR1 = 1;
@@ -163,6 +163,7 @@ void CustomMode_Handler(unsigned char Data)
 {
 	if (isReceiveLength == 0)
 	{
+		OUT_BYTE_LED(0xff,0);
 		lengthOfEffect = Data;
 		isReceiveLength = 1;
 	}
@@ -170,15 +171,19 @@ void CustomMode_Handler(unsigned char Data)
 	{
 		if (Count == lengthOfEffect * 5)
 		{
-			OUT_BYTE_LED(0xff,0);
 			START_BYTE = 0 ;						// nhan du roi clear mode
 			MODE = 0 ;							
 		}
 		else
 		{
+			OUT_BYTE_LED(0xaa,1);
 			ledCheck = ~ledCheck;
 			storage[Count] = Data; 
 			Count++ ;
+			if (Count % 5 == 4)
+			{
+				OUT_BYTE_LED(0xff,1);
+			}
 		}
 		
 	}
@@ -216,7 +221,6 @@ void Receive_Handler(unsigned char Data)
 			ledCustom = ~ledCustom;
 			CustomMode_Handler(Data);
 		}
-		
 		else
 		{
 			// Turn on LED
@@ -231,23 +235,6 @@ void Receive_Handler(unsigned char Data)
 		MODE = 0 ;
 	}
 	RI = 0;
-}
-
-
-void Custom_delay (unsigned char delayTime)
-{
-	unsigned char k ; 
-	for (k = 0 ; k < delayTime*10; k ++)
-	{
-		TMOD = 0x21; 
-		TF0 = 0; 
-		TH0 = 0xfc ; 
-		TL0 = 0x66; // thach anh = 12 TL0 = 0x18;
-		TR0 = 1; 
-		while(!TF0);
-		TF0 = 0; 
-		TR0 = 0 ;
-	}
 }
 
 
@@ -267,6 +254,21 @@ void ISR_UART(void) interrupt 4
 }
 
 
+void Custom_delay (unsigned char delayTime)
+{
+	unsigned char i ;
+	TMOD = 0x21; 
+	TF0 = 0;
+	for (i = 0 ; i < delayTime; i ++)
+	{
+		TH0 = 0xDC ; 
+		TL0 = 0x00; // thach anh = 12 TL0 = 0x18;
+		TR0 = 1; 
+		while(TF0 == 0);
+		TF0 = 0; 
+		TR0 = 0 ;
+	}
+}
 
 
 
@@ -288,39 +290,27 @@ void main()
    	 
 	while(1)
 	{
-		/*
 		unsigned char i;
-		//if (Count == lengthOfEffect * 5 && isReceiveLength == 1)					// neu da nhan duoc tin hieu thi 
-		//{
-			//MODE = 0 ;						// clear and wait for another mode
-			//START_BYTE = 0 ; 
-			
-			for (i = 0 ; i < 10 ; i++)
+		
+		if (Count == lengthOfEffect * 5 && isReceiveLength == 1)					// neu da nhan duoc tin hieu thi 
+		{
+			MODE = 0 ;						// clear and wait for another mode
+			START_BYTE = 0 ; 
+			for (i = 0 ; i < lengthOfEffect* 5 ; i++)
 			{
-				TI = 0 ; 								// send uart de kiem tra
-				SBUF = i ; 
-				while(TI ==0);
-				TI = 0;
 				if (i % 5 == 4)				
 				{
 					Custom_delay(storage[i]);
 				}
-				else
+				else if (i % 5 == 0)
 				{
-					OUT_BYTE_LED(0x0f, i % 5);
+					OUT_BYTE_LED(storage[i], 0);
+					OUT_BYTE_LED(storage[i+1], 1);
+					OUT_BYTE_LED(storage[i+2], 2);
+					OUT_BYTE_LED(storage[i+3], 3);
+					i = i + 3 ;
 				}
 			}
-		//}
-			
-			*/
-			OUT_BYTE_LED(0x00,0);
-			OUT_BYTE_LED(0x00,1);
-			OUT_BYTE_LED(0x00,2);
-			OUT_BYTE_LED(0x00,3);
-			Custom_delay(200);
-			OUT_BYTE_LED(0xf0,0);
-			OUT_BYTE_LED(0xf0,1);
-			OUT_BYTE_LED(0xf0,2);
-			OUT_BYTE_LED(0xf0,3);
+		}
 	}
 }

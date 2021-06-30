@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -45,7 +45,7 @@ line level    source
   36          ////////////////////////////////
   37          unsigned char isReceiveLength =  0;
   38          unsigned char lengthOfEffect = 0 ;
-  39          unsigned char storage[10] = {0xff, 0xff, 0xff ,0xff, 0x50, 0x00, 0x00, 0x00 ,0x00, 0x50} ;
+  39          unsigned char storage[100];
   40          // unsigned char isStateOrDelay = 0 ; // = 0 means wait for led value, =1 means wait for delay value
   41          
   42          
@@ -62,7 +62,7 @@ line level    source
   53   3            IDX0_IC595_SHCP = 1;
   54   3            IDX0_IC595_SHCP = 0 ;
   55   3          }
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 2   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 2   
 
   56   2          IDX0_IC595_STCP = 1 ;
   57   2          IDX0_IC595_STCP = 0 ; 
@@ -126,7 +126,7 @@ line level    source
  115   2          OUT_BYTE_LED(STATE_595_1, idx_595);
  116   2        }
  117   1        else if (idx_595 == 2)
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 3   
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 3   
 
  118   1        {
  119   2          STATE_595_2 |= (0x01 << idx) ; 
@@ -144,7 +144,7 @@ line level    source
  131          //khoi tao
  132          void UART_Init()
  133          {
- 134   1        TMOD = 0x20;    /* Timer 1, 8-bit auto reload mode */
+ 134   1        TMOD = 0x21;    /* Timer 1, 8-bit auto reload mode */
  135   1        TH1 = 0xFD;   /* Load value for 9600 baud rate */ //F3
  136   1        SCON = 0x50;    /* Mode 1, reception enable */
  137   1        TR1 = 1;
@@ -176,182 +176,172 @@ line level    source
  163          {
  164   1        if (isReceiveLength == 0)
  165   1        {
- 166   2          lengthOfEffect = Data;
- 167   2          isReceiveLength = 1;
- 168   2        }
- 169   1        else
- 170   1        {
- 171   2          if (Count == lengthOfEffect * 5)
- 172   2          {
- 173   3            OUT_BYTE_LED(0xff,0);
+ 166   2          OUT_BYTE_LED(0xff,0);
+ 167   2          lengthOfEffect = Data;
+ 168   2          isReceiveLength = 1;
+ 169   2        }
+ 170   1        else
+ 171   1        {
+ 172   2          if (Count == lengthOfEffect * 5)
+ 173   2          {
  174   3            START_BYTE = 0 ;            // nhan du roi clear mode
  175   3            MODE = 0 ;              
  176   3          }
  177   2          else
  178   2          {
- 179   3            ledCheck = ~ledCheck;
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 4   
+ 179   3            OUT_BYTE_LED(0xaa,1);
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 4   
 
- 180   3            storage[Count] = Data; 
- 181   3            Count++ ;
- 182   3          }
- 183   2          
- 184   2        }
- 185   1      }
- 186          
- 187          
- 188          void Receive_Handler(unsigned char Data)
- 189          {
- 190   1        TI = 0 ;                // send uart de kiem tra
- 191   1        Data -= 0x30;           // se xoa 
- 192   1        SBUF = Data ; 
- 193   1        while(TI ==0);
- 194   1        TI = 0;
- 195   1        if (START_BYTE == 0 && Data == 0)     // chua co du lieu va nhan duoc start_byte
- 196   1        {
- 197   2          ledCustom = 0;
- 198   2          isReceiveLength = 0;                // clear custom
- 199   2          Count = 0 ;
- 200   2          ledStart = 1 ;
- 201   2          START_BYTE = 1;
- 202   2        }
- 203   1        else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 5))  // neu da start va mode chua co, thi ch
+ 180   3            ledCheck = ~ledCheck;
+ 181   3            storage[Count] = Data; 
+ 182   3            Count++ ;
+ 183   3            if (Count % 5 == 4)
+ 184   3            {
+ 185   4              OUT_BYTE_LED(0xff,1);
+ 186   4            }
+ 187   3          }
+ 188   2          
+ 189   2        }
+ 190   1      }
+ 191          
+ 192          
+ 193          void Receive_Handler(unsigned char Data)
+ 194          {
+ 195   1        TI = 0 ;                // send uart de kiem tra
+ 196   1        Data -= 0x30;           // se xoa 
+ 197   1        SBUF = Data ; 
+ 198   1        while(TI ==0);
+ 199   1        TI = 0;
+ 200   1        if (START_BYTE == 0 && Data == 0)     // chua co du lieu va nhan duoc start_byte
+ 201   1        {
+ 202   2          ledCustom = 0;
+ 203   2          isReceiveLength = 0;                // clear custom
+ 204   2          Count = 0 ;
+ 205   2          ledStart = 1 ;
+ 206   2          START_BYTE = 1;
+ 207   2        }
+ 208   1        else if (START_BYTE == 1 && MODE == 0 && (Data > 0 && Data < 5))  // neu da start va mode chua co, thi ch
              -eck xem mode byte co dung format k __ mode 1 mode 2
- 204   1        {
- 205   2          MODE = Data;
- 206   2        }
- 207   1        else if (START_BYTE !=0 && MODE != 0)
- 208   1        {
- 209   2          if (MODE == 1 || MODE == 2 || MODE == 3)
- 210   2          {
- 211   3            ledCustom = 0;
- 212   3            HardMode_Handler(Data);
- 213   3          }
- 214   2          else if (MODE == 4)
+ 209   1        {
+ 210   2          MODE = Data;
+ 211   2        }
+ 212   1        else if (START_BYTE !=0 && MODE != 0)
+ 213   1        {
+ 214   2          if (MODE == 1 || MODE == 2 || MODE == 3)
  215   2          {
- 216   3            ledCustom = ~ledCustom;
- 217   3            CustomMode_Handler(Data);
+ 216   3            ledCustom = 0;
+ 217   3            HardMode_Handler(Data);
  218   3          }
- 219   2          
- 220   2          else
- 221   2          {
- 222   3            // Turn on LED
- 223   3            // should not reach here
- 224   3          }
- 225   2        }
- 226   1        else        // chua hop sai
- 227   1        {
- 228   2          ledCustom = 0;
- 229   2          ledStart = 0 ;
- 230   2          START_BYTE = 0 ;
- 231   2          MODE = 0 ;
- 232   2        }
- 233   1        RI = 0;
- 234   1      }
- 235          
- 236          
- 237          void Custom_delay (unsigned char delayTime)
- 238          {
- 239   1        unsigned char k ; 
- 240   1        for (k = 0 ; k < delayTime*10; k ++)
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 5   
+ 219   2          else if (MODE == 4)
+ 220   2          {
+ 221   3            ledCustom = ~ledCustom;
+ 222   3            CustomMode_Handler(Data);
+ 223   3          }
+ 224   2          else
+ 225   2          {
+ 226   3            // Turn on LED
+ 227   3            // should not reach here
+ 228   3          }
+ 229   2        }
+ 230   1        else        // chua hop sai
+ 231   1        {
+ 232   2          ledCustom = 0;
+ 233   2          ledStart = 0 ;
+ 234   2          START_BYTE = 0 ;
+ 235   2          MODE = 0 ;
+ 236   2        }
+ 237   1        RI = 0;
+ 238   1      }
+ 239          
+ 240          
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 5   
 
- 241   1        {
- 242   2          TMOD = 0x21; 
- 243   2          TF0 = 0; 
- 244   2          TH0 = 0xfc ; 
- 245   2          TL0 = 0x66; // thach anh = 12 TL0 = 0x18;
- 246   2          TR0 = 1; 
- 247   2          while(!TF0);
- 248   2          TF0 = 0; 
- 249   2          TR0 = 0 ;
- 250   2        }
- 251   1      }
- 252          
- 253          
- 254          void ISR_UART(void) interrupt 4
- 255          {
- 256   1        if(RI == 1)           //Kiem tra xem la ngat nhan hay truyen
- 257   1        { 
- 258   2          ledUart = ~ledUart;
- 259   2          r_data = SBUF;          //nhan du lieu
- 260   2          Receive_Handler(r_data);
- 261   2        }
- 262   1      
- 263   1        else if (TI==1)
- 264   1        {
- 265   2          TI=0;
- 266   2        }
- 267   1      }
- 268          
- 269          
- 270          
- 271          
+ 241          void ISR_UART(void) interrupt 4
+ 242          {
+ 243   1        if(RI == 1)           //Kiem tra xem la ngat nhan hay truyen
+ 244   1        { 
+ 245   2          ledUart = ~ledUart;
+ 246   2          r_data = SBUF;          //nhan du lieu
+ 247   2          Receive_Handler(r_data);
+ 248   2        }
+ 249   1      
+ 250   1        else if (TI==1)
+ 251   1        {
+ 252   2          TI=0;
+ 253   2        }
+ 254   1      }
+ 255          
+ 256          
+ 257          void Custom_delay (unsigned char delayTime)
+ 258          {
+ 259   1        unsigned char i ;
+ 260   1        TMOD = 0x21; 
+ 261   1        TF0 = 0;
+ 262   1        for (i = 0 ; i < delayTime; i ++)
+ 263   1        {
+ 264   2          TH0 = 0xDC ; 
+ 265   2          TL0 = 0x00; // thach anh = 12 TL0 = 0x18;
+ 266   2          TR0 = 1; 
+ 267   2          while(TF0 == 0);
+ 268   2          TF0 = 0; 
+ 269   2          TR0 = 0 ;
+ 270   2        }
+ 271   1      }
  272          
- 273          void main()
- 274          {
- 275   1        
- 276   1      //  // INIT 32 LED
- 277   1        OUT_BYTE_LED(0x00,0);
- 278   1        OUT_BYTE_LED(0x00,1);
- 279   1        OUT_BYTE_LED(0x00,2);
- 280   1        OUT_BYTE_LED(0x00,3);
- 281   1        
- 282   1        OUT_BYTE_LED(0x00,0);
- 283   1        OUT_BYTE_LED(0x00,1);
- 284   1        OUT_BYTE_LED(0x00,2);
- 285   1        OUT_BYTE_LED(0x00,3);
- 286   1        
- 287   1        UART_Init();
- 288   1           
- 289   1        while(1)
- 290   1        {
- 291   2          /*
- 292   2          unsigned char i;
- 293   2          //if (Count == lengthOfEffect * 5 && isReceiveLength == 1)          // neu da nhan duoc tin hieu thi 
- 294   2          //{
- 295   2            //MODE = 0 ;            // clear and wait for another mode
- 296   2            //START_BYTE = 0 ; 
- 297   2            
- 298   2            for (i = 0 ; i < 10 ; i++)
- 299   2            {
- 300   2              TI = 0 ;                // send uart de kiem tra
- 301   2              SBUF = i ; 
- 302   2              while(TI ==0);
-C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 20:16:34 PAGE 6   
+ 273          
+ 274          
+ 275          void main()
+ 276          {
+ 277   1        
+ 278   1      //  // INIT 32 LED
+ 279   1        OUT_BYTE_LED(0x00,0);
+ 280   1        OUT_BYTE_LED(0x00,1);
+ 281   1        OUT_BYTE_LED(0x00,2);
+ 282   1        OUT_BYTE_LED(0x00,3);
+ 283   1        
+ 284   1        OUT_BYTE_LED(0x00,0);
+ 285   1        OUT_BYTE_LED(0x00,1);
+ 286   1        OUT_BYTE_LED(0x00,2);
+ 287   1        OUT_BYTE_LED(0x00,3);
+ 288   1        
+ 289   1        UART_Init();
+ 290   1           
+ 291   1        while(1)
+ 292   1        {
+ 293   2          unsigned char i;
+ 294   2          
+ 295   2          if (Count == lengthOfEffect * 5 && isReceiveLength == 1)          // neu da nhan duoc tin hieu thi 
+ 296   2          {
+ 297   3            MODE = 0 ;            // clear and wait for another mode
+ 298   3            START_BYTE = 0 ; 
+ 299   3            for (i = 0 ; i < lengthOfEffect* 5 ; i++)
+ 300   3            {
+ 301   4              if (i % 5 == 4)       
+ 302   4              {
+C51 COMPILER V9.52.0.0   MAIN                                                              06/30/2021 22:52:58 PAGE 6   
 
- 303   2              TI = 0;
- 304   2              if (i % 5 == 4)       
- 305   2              {
- 306   2                Custom_delay(storage[i]);
- 307   2              }
- 308   2              else
- 309   2              {
- 310   2                OUT_BYTE_LED(0x0f, i % 5);
- 311   2              }
- 312   2            }
- 313   2          //}
- 314   2            
- 315   2            */
- 316   2            OUT_BYTE_LED(0x00,0);
- 317   2            OUT_BYTE_LED(0x00,1);
- 318   2            OUT_BYTE_LED(0x00,2);
- 319   2            OUT_BYTE_LED(0x00,3);
- 320   2            Custom_delay(200);
- 321   2            OUT_BYTE_LED(0xf0,0);
- 322   2            OUT_BYTE_LED(0xf0,1);
- 323   2            OUT_BYTE_LED(0xf0,2);
- 324   2            OUT_BYTE_LED(0xf0,3);
- 325   2        }
- 326   1      }
+ 303   5                Custom_delay(storage[i]);
+ 304   5              }
+ 305   4              else if (i % 5 == 0)
+ 306   4              {
+ 307   5                OUT_BYTE_LED(storage[i], 0);
+ 308   5                OUT_BYTE_LED(storage[i+1], 1);
+ 309   5                OUT_BYTE_LED(storage[i+2], 2);
+ 310   5                OUT_BYTE_LED(storage[i+3], 3);
+ 311   5                i = i + 3 ;
+ 312   5              }
+ 313   4            }
+ 314   3          }
+ 315   2        }
+ 316   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    714    ----
+   CODE SIZE        =    797    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     20       1
+   DATA SIZE        =    110       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
